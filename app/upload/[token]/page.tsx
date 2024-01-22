@@ -10,7 +10,6 @@ function UploadTokenPage({ params }: { params: { token: string } }) {
     ? true
     : false;
 
-  console.log("IsValid", isValid);
 
   return (
     <div>
