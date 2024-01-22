@@ -7,13 +7,16 @@ function LinkPage() {
     expiresIn: "1h",
   });
 
-  const url: string = process.env.BASE_URL + `upload/${token}`;
+  const baseUrl =
+    (process.env.BASE_URL as string) ?? (process.env.VERCEL_URL as string);
+
+  const url: string = baseUrl + `upload/${token}`;
 
   return (
     <section>
       <h1 className="text-4xl">Share link:</h1>
       <p>Url: {url}</p>
-      <QRCodeSVG value={url}  className="m-40"/>
+      <QRCodeSVG value={url} className="m-40" />
     </section>
   );
 }

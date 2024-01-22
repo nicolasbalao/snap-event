@@ -1,6 +1,7 @@
 import { v2 as cloudinary } from "cloudinary";
 import CCldImage from "./Components/CCldImage";
 import UploadButton from "./Components/UploadButton";
+import Link from "next/link";
 
 type imageData = {
   public_id: string;
@@ -25,13 +26,15 @@ export default async function GalleryPage() {
       <div className="grid grid-cols-4 gap-4">
         {resources &&
           resources.map((image: imageData) => (
-            <CCldImage
-              src={image.public_id}
-              alt="image"
-              height={100}
-              width={100}
-              key={image.public_id}
-            />
+            <Link href={`photos/${image.public_id}`}>
+              <CCldImage
+                src={image.public_id}
+                alt="image"
+                height={100}
+                width={100}
+                key={image.public_id}
+              />
+            </Link>
           ))}
       </div>
     </main>
