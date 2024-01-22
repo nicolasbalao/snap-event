@@ -26,13 +26,12 @@ export default async function GalleryPage() {
       <div className="grid grid-cols-4 gap-4">
         {resources &&
           resources.map((image: imageData) => (
-            <Link href={`photos/${image.public_id}`}>
+            <Link href={`photos/${image.public_id}`} key={image.public_id}>
               <CCldImage
                 src={image.public_id}
                 alt="image"
                 height={100}
                 width={100}
-                key={image.public_id}
               />
             </Link>
           ))}
