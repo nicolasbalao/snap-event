@@ -10,7 +10,7 @@ function LinkPage() {
   const baseUrl =
     (process.env.BASE_URL as string) ?? (process.env.VERCEL_URL as string);
 
-  const url: string = baseUrl + `upload/${token}`;
+  const url: string = baseUrl + `/upload/${token}`;
 
   return (
     <section>
