@@ -1,10 +1,9 @@
 "use client";
 import { CldUploadButton } from "next-cloudinary";
 import React from "react";
-import { useRouter } from "next/navigation";
+import { revalidateTagGallery } from "../actions/revalidateGallery.action";
 
 function UploadButton() {
-  const router = useRouter();
   return (
     <CldUploadButton
       uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME}
@@ -12,7 +11,7 @@ function UploadButton() {
       onSuccess={() => {
         // TODO: Find better solution for handle the reload
         setTimeout(() => {
-          router.refresh();
+          revalidateTagGallery();
         }, 2000);
       }}
     />

@@ -2,17 +2,40 @@ import { v2 as cloudinary } from "cloudinary";
 import CCldImage from "./Components/CCldImage";
 import UploadButton from "./Components/UploadButton";
 import Link from "next/link";
+import { unstable_cache } from "next/cache";
 
 type imageData = {
   public_id: string;
 };
 
-export default async function GalleryPage() {
+// export const dynamic = "auto";
+
+async function getGallery() {
   const { resources } = await cloudinary.search
     .expression("resource_type:image")
     .sort_by("created_at", "desc")
     .max_results(30)
     .execute();
+
+  return resources;
+}
+
+const cachedGallery = unstable_cache(
+  async () => await getGallery(),
+  ["my-gallery"],
+  { tags: ["gallery"], revalidate: 60 }
+);
+
+export default async function GalleryPage() {
+  const resources = await cachedGallery();
+
+  // console.log("Resource", resources);
+
+  // const { resources } = await cloudinary.search
+  //   .expression("resource_type:image")
+  //   .sort_by("created_at", "desc")
+  //   .max_results(30)
+  //   .execute();
 
   return (
     <main>
