@@ -8,7 +8,7 @@ type imageData = {
   public_id: string;
 };
 
-// export const dynamic = "auto";
+export const dynamic = "auto";
 
 async function getGallery() {
   const { resources } = await cloudinary.search
@@ -28,14 +28,6 @@ const cachedGallery = unstable_cache(
 
 export default async function GalleryPage() {
   const resources = await cachedGallery();
-
-  // console.log("Resource", resources);
-
-  // const { resources } = await cloudinary.search
-  //   .expression("resource_type:image")
-  //   .sort_by("created_at", "desc")
-  //   .max_results(30)
-  //   .execute();
 
   return (
     <main>
