@@ -32,7 +32,7 @@ export default async function SignInAction(
   );
 
   cookies().set("Session", sessionToken, {
-    secure: true,
+    secure: process.env.NODE_ENV === "production",
     httpOnly: true,
     maxAge: 60 * 60 * 24 * 7, // 1 week,
     path: "/",
