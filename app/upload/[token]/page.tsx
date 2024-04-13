@@ -1,7 +1,7 @@
 import React from "react";
 import * as jwt from "jsonwebtoken";
 import { CldUploadButton } from "next-cloudinary";
-import UploadButton from "../../Components/UploadButton";
+import UploadButton from "../../../components/UploadButton";
 
 function UploadTokenPage({ params }: { params: { token: string } }) {
   const { token } = params;
@@ -9,7 +9,6 @@ function UploadTokenPage({ params }: { params: { token: string } }) {
   const isValid = jwt.verify(token, process.env.JWT_KEY as string)
     ? true
     : false;
-
 
   return (
     <div>
