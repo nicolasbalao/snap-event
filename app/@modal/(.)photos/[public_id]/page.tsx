@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import CCldImage from "../../../Components/CCldImage";
+import CCldImage from "../../../../components/CCldImage";
 
 export default function PhotoModal({ params }: { params: any }) {
   const { public_id } = params;

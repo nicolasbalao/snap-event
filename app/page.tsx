@@ -1,6 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
-import CCldImage from "./Components/CCldImage";
-import UploadButton from "./Components/UploadButton";
+import CCldImage from "../components/CCldImage";
+import UploadButton from "../components/UploadButton";
 import Link from "next/link";
 import { unstable_cache } from "next/cache";
 
