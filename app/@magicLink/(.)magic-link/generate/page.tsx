@@ -17,7 +17,8 @@ export default function MagicLinkPopup() {
 
   const handleClosePopup = (e: any) => {
     if (e.target.classList.contains("overlay")) {
-      router.back();
+      // router.back();
+      router.push("/");
     }
   };
 
