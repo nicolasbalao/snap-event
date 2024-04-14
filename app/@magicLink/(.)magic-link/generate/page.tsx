@@ -6,12 +6,12 @@ export const dynamic = "force-dynamic";
 
 export default function MagicLinkPopup() {
   const [isCopied, setIsCopied] = useState(false);
-  const [magicLink, setMagicLink] = useState("");
+  const [magicLink, setMagicLink] = useState("test");
 
-  const handleCopyToClipboard = () => {
-    navigator.clipboard.writeText(magicLink);
-    setIsCopied(true);
-  };
+  // const handleCopyToClipboard = () => {
+  //   navigator.clipboard.writeText(magicLink);
+  //   setIsCopied(true);
+  // };
 
   const router = useRouter();
 
@@ -21,17 +21,17 @@ export default function MagicLinkPopup() {
     }
   };
 
-  useEffect(() => {
-    // const resp = fetch("/api/magic-link/generate", { cache: "no-store" });
-    // resp
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     console.log("Data", data);
-    //     if (data.magicLink) {
-    //       setMagicLink(data.magicLink);
-    //     }
-    //   });
-  }, []);
+  // useEffect(() => {
+  //   // const resp = fetch("/api/magic-link/generate", { cache: "no-store" });
+  //   // resp
+  //   //   .then((res) => res.json())
+  //   //   .then((data) => {
+  //   //     console.log("Data", data);
+  //   //     if (data.magicLink) {
+  //   //       setMagicLink(data.magicLink);
+  //   //     }
+  //   //   });
+  // }, []);
 
   return (
     <>
@@ -43,7 +43,7 @@ export default function MagicLinkPopup() {
           <input type="text" value={magicLink} className="w-fit" />
           <button
             className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-            onClick={handleCopyToClipboard}
+            // onClick={handleCopyToClipboard}
           >
             {isCopied ? "Copied!" : "Copy"}
           </button>
