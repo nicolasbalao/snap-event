@@ -11,6 +11,8 @@ export default function MagicLinkPopup() {
     setIsCopied(true);
   };
 
+  setMagicLink("Loading...");
+
   const router = useRouter();
 
   const handleClosePopup = (e: any) => {
@@ -20,14 +22,14 @@ export default function MagicLinkPopup() {
   };
 
   useEffect(() => {
-    const resp = fetch("/api/magic-link/generate", { cache: "no-store" });
-    resp
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.magicLink) {
-          setMagicLink(data.magicLink);
-        }
-      });
+    // const resp = fetch("/api/magic-link/generate", { cache: "no-store" });
+    // resp
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     if (data.magicLink) {
+    //       setMagicLink(data.magicLink);
+    //     }
+    //   });
   }, []);
 
   return (
