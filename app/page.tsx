@@ -37,6 +37,9 @@ export default async function GalleryPage() {
         <button className="bg-lime-600 text-white p-2 rounded">
           <a href="/link">Create link</a>
         </button>
+        <button className="bg-lime-600 text-white p-2 rounded">
+          <Link href="/magic-link/generate">Create Magic link</Link>
+        </button>
       </div>
       <div className="grid grid-cols-4 gap-4">
         {resources &&

@@ -12,15 +12,18 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-  modal,
+  modal: photoModal,
+  magicLink,
 }: {
   children: React.ReactNode;
   modal: React.ReactNode;
+  magicLink: React.ReactNode;
 }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        {modal}
+        {magicLink}
+        {photoModal}
         <div className="flex items-center justify-center h-full w-full p-6 bg-orange-100 text-purple-900 text-opacity-70">
           {children}
         </div>
