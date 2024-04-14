@@ -2,6 +2,8 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+export const dynamic = "force-dynamic";
+
 export default function MagicLinkPopup() {
   const [isCopied, setIsCopied] = useState(false);
   const [magicLink, setMagicLink] = useState("");
@@ -22,14 +24,15 @@ export default function MagicLinkPopup() {
   };
 
   useEffect(() => {
-    // const resp = fetch("/api/magic-link/generate", { cache: "no-store" });
-    // resp
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     if (data.magicLink) {
-    //       setMagicLink(data.magicLink);
-    //     }
-    //   });
+    const resp = fetch("/api/magic-link/generate", { cache: "no-store" });
+    resp
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Data", data);
+        if (data.magicLink) {
+          setMagicLink(data.magicLink);
+        }
+      });
   }, []);
 
   return (
