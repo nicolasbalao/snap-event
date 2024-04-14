@@ -22,15 +22,15 @@ export default function MagicLinkPopup() {
   };
 
   useEffect(() => {
-    const resp = fetch("/api/magic-link/generate", { cache: "no-store" });
-    resp
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Data", data);
-        if (data.magicLink) {
-          setMagicLink(data.magicLink);
-        }
-      });
+    // const resp = fetch("/api/magic-link/generate", { cache: "no-store" });
+    // resp
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log("Data", data);
+    //     if (data.magicLink) {
+    //       setMagicLink(data.magicLink);
+    //     }
+    //   });
   }, []);
 
   return (
