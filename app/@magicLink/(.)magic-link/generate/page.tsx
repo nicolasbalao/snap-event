@@ -1,12 +1,10 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function MagicLinkPopup() {
   const [isCopied, setIsCopied] = useState(false);
-
-  const magicLink =
-    "http://localhost:3000/upload/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIifQ.1J3";
+  const [magicLink, setMagicLink] = useState("");
 
   const handleCopyToClipboard = () => {
     navigator.clipboard.writeText(magicLink);
@@ -21,6 +19,15 @@ export default function MagicLinkPopup() {
     }
   };
 
+  useEffect(() => {
+    const resp = fetch("/api/magic-link/generate");
+    resp
+      .then((res) => res.json())
+      .then((data) => {
+        setMagicLink(data.magicLink);
+      });
+  }, []);
+
   return (
     <>
       <div
@@ -28,7 +35,7 @@ export default function MagicLinkPopup() {
         onClick={handleClosePopup}
       >
         <div className="flex gap-3 p-9 bg-white rounded-sm">
-          <input type="text" value={magicLink} />
+          <input type="text" value={magicLink} className="w-fit" />
           <button
             className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
             onClick={handleCopyToClipboard}
