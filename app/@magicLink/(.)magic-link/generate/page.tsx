@@ -24,7 +24,9 @@ export default function MagicLinkPopup() {
     resp
       .then((res) => res.json())
       .then((data) => {
-        setMagicLink(data.magicLink);
+        if (data.magicLink) {
+          setMagicLink(data.magicLink);
+        }
       });
   }, []);
 
