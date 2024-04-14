@@ -13,8 +13,6 @@ export default function MagicLinkPopup() {
     setIsCopied(true);
   };
 
-  setMagicLink("Loading...");
-
   const router = useRouter();
 
   const handleClosePopup = (e: any) => {
