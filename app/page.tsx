@@ -8,7 +8,7 @@ type imageData = {
   public_id: string;
 };
 
-export const dynamic = "auto";
+export const dynamic = "force-dynamic";
 
 async function getGallery() {
   const { resources } = await cloudinary.search
