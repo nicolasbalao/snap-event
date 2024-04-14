@@ -20,7 +20,7 @@ export default function MagicLinkPopup() {
   };
 
   useEffect(() => {
-    const resp = fetch("/api/magic-link/generate");
+    const resp = fetch("/api/magic-link/generate", { cache: "no-store" });
     resp
       .then((res) => res.json())
       .then((data) => {

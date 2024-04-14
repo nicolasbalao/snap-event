@@ -1,6 +1,8 @@
 import * as jwt from "jsonwebtoken";
 import setCookieAction from "../../../../../actions/generate-auth-cookie.action";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(request: Request) {
   const body = await request.json();
   const { token } = body;
