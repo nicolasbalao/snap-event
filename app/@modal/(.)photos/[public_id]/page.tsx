@@ -52,6 +52,26 @@ export default function PhotoModal({ params }: { params: any }) {
       });
   }, []);
 
+  function deleteTag(tag: string): void {
+    try {
+      fetch(`/api/photos/${public_id}/tags`, {
+        method: "DELETE",
+        body: JSON.stringify({ tag }),
+        headers: {
+          "content-type": "application/json",
+        },
+      }).then((res) => {
+        if (res.ok) {
+          setExistingTags(existingTags.filter((t) => t !== tag));
+        } else {
+          console.error(res.statusText);
+        }
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   return (
     <>
       <div
@@ -86,7 +106,10 @@ export default function PhotoModal({ params }: { params: any }) {
             {existingTags.length > 0 && (
               <div>
                 {existingTags.map((tag, index) => (
-                  <span key={tag + index}>{tag}, </span>
+                  <div>
+                    <span key={tag + index}>{tag}, </span>
+                    <button onClick={() => deleteTag(tag)}>X</button>
+                  </div>
                 ))}
               </div>
             )}
