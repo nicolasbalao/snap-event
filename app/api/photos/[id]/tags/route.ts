@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
+import addTags from "../../../../../actions/add-tags.action";
 
 export const dynamic = "force-dynamic";
 
@@ -16,6 +17,18 @@ export async function GET(
   }
 
   return Response.json({ tags: image.tags });
+}
+
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const publicId = params.id;
+  const { tags } = await request.json();
+
+  await addTags(publicId, tags);
+
+  return Response.json({ publicId, tags });
 }
 
 export async function DELETE(

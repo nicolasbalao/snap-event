@@ -20,7 +20,7 @@ export default function PhotoModal({ params }: { params: any }) {
     e.preventDefault();
 
     try {
-      const res = await fetch(`/api/photos/${public_id}/addTags`, {
+      const res = await fetch(`/api/photos/${public_id}/tags`, {
         method: "PUT",
         body: JSON.stringify({ tags: [...newTags, ...existingTags] }),
         headers: {
@@ -28,7 +28,6 @@ export default function PhotoModal({ params }: { params: any }) {
         },
       });
 
-      console.log(res);
       if (res.ok) {
         const data = await res.json();
         const { tags } = data;
