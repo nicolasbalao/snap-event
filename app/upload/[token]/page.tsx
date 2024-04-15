@@ -1,6 +1,5 @@
 import React from "react";
 import * as jwt from "jsonwebtoken";
-import { CldUploadButton } from "next-cloudinary";
 import UploadButton from "../../../components/UploadButton";
 
 function UploadTokenPage({ params }: { params: { token: string } }) {

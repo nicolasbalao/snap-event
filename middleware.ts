@@ -7,6 +7,13 @@ export function middleware(request: NextRequest) {
     return;
   }
 
+  if (
+    currentUser &&
+    request.nextUrl.pathname.startsWith("/login/magic-link/generate")
+  ) {
+    return;
+  }
+
   if (!currentUser && !request.nextUrl.pathname.startsWith("/login")) {
     return Response.redirect(
       new URL("/login", request.nextUrl).toString(),
