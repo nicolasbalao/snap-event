@@ -33,6 +33,7 @@ export default function PhotoModal({ params }: { params: any }) {
         const { tags } = data;
         setExistingTags(tags);
         setNewTags([]);
+        router.refresh();
       } else {
         console.error(res.statusText);
       }
@@ -62,6 +63,7 @@ export default function PhotoModal({ params }: { params: any }) {
       }).then((res) => {
         if (res.ok) {
           setExistingTags(existingTags.filter((t) => t !== tag));
+          router.refresh();
         } else {
           console.error(res.statusText);
         }

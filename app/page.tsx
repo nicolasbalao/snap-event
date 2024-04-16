@@ -4,6 +4,7 @@ import UploadButton from "../components/UploadButton";
 import Link from "next/link";
 import { unstable_cache } from "next/cache";
 import { redirect } from "next/navigation";
+import TagNav from "../components/TagsNav";
 
 type imageData = {
   public_id: string;
@@ -49,8 +50,6 @@ export default async function GalleryPage({
     "use server";
     redirect(`/?query=${data.get("query")}`);
   }
-  
-
 
   return (
     <main>
@@ -69,6 +68,7 @@ export default async function GalleryPage({
           <Link href="/magic-link/generate">Create Magic link</Link>
         </button>
       </div>
+      <TagNav />
       <div className="grid grid-cols-4 gap-4">
         {resources &&
           resources.map((image: imageData) => (
