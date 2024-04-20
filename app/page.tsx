@@ -2,7 +2,7 @@ import { v2 as cloudinary } from "cloudinary";
 import CCldImage from "../components/CCldImage";
 import UploadButton from "../components/UploadButton";
 import Link from "next/link";
-import { unstable_cache } from "next/cache";
+import { revalidateTag, unstable_cache } from "next/cache";
 import { redirect } from "next/navigation";
 import TagNav from "../components/TagsNav";
 
@@ -51,6 +51,18 @@ export default async function GalleryPage({
     redirect(`/?query=${data.get("query")}`);
   }
 
+  async function deleteImage(data: any) {
+    "use server";
+    const public_id = data.get("public_id");
+    const { result }: { result: string } = await cloudinary.uploader.destroy(
+      public_id
+    );
+
+    if (result === "ok") {
+      revalidateTag("gallery");
+    }
+  }
+
   return (
     <main>
       <div className="flex justify-between items-center mb-6">
@@ -72,14 +84,20 @@ export default async function GalleryPage({
       <div className="grid grid-cols-4 gap-4">
         {resources &&
           resources.map((image: imageData) => (
-            <Link href={`photos/${image.public_id}`} key={image.public_id}>
-              <CCldImage
-                src={image.public_id}
-                alt="image"
-                height={100}
-                width={100}
-              />
-            </Link>
+            <div>
+              <Link href={`photos/${image.public_id}`} key={image.public_id}>
+                <CCldImage
+                  src={image.public_id}
+                  alt="image"
+                  height={100}
+                  width={100}
+                />
+              </Link>
+              <form action={deleteImage}>
+                <input type="hidden" name="public_id" value={image.public_id} />
+                <button type="submit">X</button>
+              </form>
+            </div>
           ))}
       </div>
     </main>
