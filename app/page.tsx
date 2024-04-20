@@ -6,9 +6,12 @@ import { revalidateTag, unstable_cache } from "next/cache";
 import { redirect } from "next/navigation";
 import TagNav from "../components/TagsNav";
 import extractCookieSession from "../actions/extract-cookie-session.action";
+import DownloadButton from "../components/DownloadButton";
+import { log } from "console";
 
 type imageData = {
   public_id: string;
+  url: string;
 };
 
 export const dynamic = "force-dynamic";
@@ -103,6 +106,7 @@ export default async function GalleryPage({
                   width={100}
                 />
               </Link>
+              <DownloadButton url={image.url} />
               {isAdmin && (
                 <form action={deleteImage}>
                   <input
