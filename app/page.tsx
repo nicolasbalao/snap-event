@@ -2,9 +2,10 @@ import { v2 as cloudinary } from "cloudinary";
 import CCldImage from "../components/CCldImage";
 import UploadButton from "../components/UploadButton";
 import Link from "next/link";
-import { unstable_cache } from "next/cache";
+import { revalidateTag, unstable_cache } from "next/cache";
 import { redirect } from "next/navigation";
 import TagNav from "../components/TagsNav";
+import extractCookieSession from "../actions/extract-cookie-session.action";
 
 type imageData = {
   public_id: string;
@@ -36,6 +37,8 @@ export default async function GalleryPage({
 }: {
   searchParams: any;
 }) {
+  const session: any = await extractCookieSession();
+  const isAdmin: boolean = session?.role === "admin";
   const query = searchParams.query;
 
   let expression = "resource_type:image";
@@ -51,6 +54,21 @@ export default async function GalleryPage({
     redirect(`/?query=${data.get("query")}`);
   }
 
+  async function deleteImage(data: any) {
+    "use server";
+    if (!isAdmin) {
+      return null;
+    }
+    const public_id = data.get("public_id");
+    const { result }: { result: string } = await cloudinary.uploader.destroy(
+      public_id
+    );
+
+    if (result === "ok") {
+      revalidateTag("gallery");
+    }
+  }
+
   return (
     <main>
       <div className="flex justify-between items-center mb-6">
@@ -60,26 +78,42 @@ export default async function GalleryPage({
           </form>
         </div>
         <h1 className="text-3xl">Gallery page</h1>
-        <UploadButton />
-        <button className="bg-lime-600 text-white p-2 rounded">
-          <a href="/link">Create link</a>
-        </button>
-        <button className="bg-lime-600 text-white p-2 rounded">
-          <Link href="/magic-link/generate">Create Magic link</Link>
-        </button>
+        {isAdmin && (
+          <div>
+            <UploadButton />
+            <button className="bg-lime-600 text-white p-2 rounded">
+              <a href="/link">Create link</a>
+            </button>
+            <button className="bg-lime-600 text-white p-2 rounded">
+              <Link href="/magic-link/generate">Create Magic link</Link>
+            </button>
+          </div>
+        )}
       </div>
       <TagNav />
       <div className="grid grid-cols-4 gap-4">
         {resources &&
           resources.map((image: imageData) => (
-            <Link href={`photos/${image.public_id}`} key={image.public_id}>
-              <CCldImage
-                src={image.public_id}
-                alt="image"
-                height={100}
-                width={100}
-              />
-            </Link>
+            <div>
+              <Link href={`photos/${image.public_id}`} key={image.public_id}>
+                <CCldImage
+                  src={image.public_id}
+                  alt="image"
+                  height={100}
+                  width={100}
+                />
+              </Link>
+              {isAdmin && (
+                <form action={deleteImage}>
+                  <input
+                    type="hidden"
+                    name="public_id"
+                    value={image.public_id}
+                  />
+                  <button type="submit">X</button>
+                </form>
+              )}
+            </div>
           ))}
       </div>
     </main>
