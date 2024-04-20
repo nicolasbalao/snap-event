@@ -12,6 +12,7 @@ import { log } from "console";
 type imageData = {
   public_id: string;
   url: string;
+  secure_url: string;
 };
 
 export const dynamic = "force-dynamic";
@@ -97,7 +98,7 @@ export default async function GalleryPage({
       <div className="grid grid-cols-4 gap-4">
         {resources &&
           resources.map((image: imageData) => (
-            <div>
+            <div key={image.url}>
               <Link href={`photos/${image.public_id}`} key={image.public_id}>
                 <CCldImage
                   src={image.public_id}
@@ -106,7 +107,7 @@ export default async function GalleryPage({
                   width={100}
                 />
               </Link>
-              <DownloadButton url={image.url} />
+              <DownloadButton url={image.secure_url} />
               {isAdmin && (
                 <form action={deleteImage}>
                   <input
