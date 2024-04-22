@@ -7,12 +7,13 @@ import { redirect } from "next/navigation";
 import TagNav from "../components/TagsNav";
 import extractCookieSession from "../actions/extract-cookie-session.action";
 import DownloadButton from "../components/DownloadButton";
-import { log } from "console";
+import FavTag from "../components/favTag";
 
 type imageData = {
   public_id: string;
   url: string;
   secure_url: string;
+  tags: string[];
 };
 
 export const dynamic = "force-dynamic";
@@ -20,6 +21,7 @@ export const dynamic = "force-dynamic";
 async function getGallery(expression: string) {
   const { resources } = await cloudinary.search
     .expression(expression)
+    .with_field("tags")
     .sort_by("created_at", "desc")
     .max_results(30)
     .execute();
@@ -31,10 +33,15 @@ const cachedGallery = unstable_cache(
   async (expression: string) => await getGallery(expression),
   ["my-gallery"],
   {
-    tags: ["gallery"],
+    tags: ["gallery", "tags"],
     revalidate: 60,
   }
 );
+
+function isFav(tags: string[]) {
+  console.log("refresh", new Date().toLocaleString());
+  return tags.includes("favoris");
+}
 
 export default async function GalleryPage({
   searchParams,
@@ -107,6 +114,7 @@ export default async function GalleryPage({
                   width={100}
                 />
               </Link>
+              <FavTag publicId={image.public_id} isFav={isFav(image.tags)} />
               <DownloadButton url={image.secure_url} />
               {isAdmin && (
                 <form action={deleteImage}>
