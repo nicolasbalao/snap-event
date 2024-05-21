@@ -1,15 +1,13 @@
 import { v2 as cloudinary } from "cloudinary";
-import CCldImage from "../components/CCldImage";
 import UploadButton from "../components/UploadButton";
 import Link from "next/link";
-import { revalidateTag, unstable_cache } from "next/cache";
+import { unstable_cache } from "next/cache";
 import { redirect } from "next/navigation";
 import TagNav from "../components/TagsNav";
 import extractCookieSession from "../actions/extract-cookie-session.action";
-import DownloadButton from "../components/DownloadButton";
-import FavTag from "../components/favTag";
+import ImageCard from "../components/ImageCard";
 
-type imageData = {
+export type imageData = {
   public_id: string;
   url: string;
   secure_url: string;
@@ -38,11 +36,6 @@ const cachedGallery = unstable_cache(
   }
 );
 
-function isFav(tags: string[]) {
-  if (!tags) return false;
-  return tags.includes("favoris");
-}
-
 export default async function GalleryPage({
   searchParams,
 }: {
@@ -63,21 +56,6 @@ export default async function GalleryPage({
   async function search(data: FormData) {
     "use server";
     redirect(`/?query=${data.get("query")}`);
-  }
-
-  async function deleteImage(data: any) {
-    "use server";
-    if (!isAdmin) {
-      return null;
-    }
-    const public_id = data.get("public_id");
-    const { result }: { result: string } = await cloudinary.uploader.destroy(
-      public_id
-    );
-
-    if (result === "ok") {
-      revalidateTag("gallery");
-    }
   }
 
   return (
@@ -105,28 +83,7 @@ export default async function GalleryPage({
       <div className="grid grid-cols-4 gap-4">
         {resources &&
           resources.map((image: imageData) => (
-            <div key={image.url}>
-              <Link href={`photos/${image.public_id}`} key={image.public_id}>
-                <CCldImage
-                  src={image.public_id}
-                  alt="image"
-                  height={100}
-                  width={100}
-                />
-              </Link>
-              <FavTag publicId={image.public_id} isFav={isFav(image.tags)} />
-              <DownloadButton url={image.secure_url} />
-              {isAdmin && (
-                <form action={deleteImage}>
-                  <input
-                    type="hidden"
-                    name="public_id"
-                    value={image.public_id}
-                  />
-                  <button type="submit">X</button>
-                </form>
-              )}
-            </div>
+            <ImageCard image={image} isAdmin={isAdmin} key={image.public_id} />
           ))}
       </div>
     </main>
