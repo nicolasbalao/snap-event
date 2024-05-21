@@ -39,7 +39,7 @@ const cachedGallery = unstable_cache(
 );
 
 function isFav(tags: string[]) {
-  console.log("refresh", new Date().toLocaleString());
+  if (!tags) return false;
   return tags.includes("favoris");
 }
 
