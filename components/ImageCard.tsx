@@ -46,14 +46,18 @@ export default function ImageCard(props: ImageCardProps) {
             height={300}
           />
         </Link>
-        <FavTag publicId={image.public_id} isFav={isFav(image.tags)} />
-        <DownloadButton url={image.secure_url} />
-        {isAdmin && (
-          <form action={deleteImage}>
-            <input type="hidden" name="public_id" value={image.public_id} />
-            <button type="submit">X</button>
-          </form>
-        )}
+        <div className="flex justify-between p-2">
+          <div className="flex">
+            <FavTag publicId={image.public_id} isFav={isFav(image.tags)} />
+            {isAdmin && (
+              <form action={deleteImage}>
+                <input type="hidden" name="public_id" value={image.public_id} />
+                <button type="submit">X</button>
+              </form>
+            )}
+          </div>
+          <DownloadButton url={image.secure_url} />
+        </div>
       </div>
     </>
   );

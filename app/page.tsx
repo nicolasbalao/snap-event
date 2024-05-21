@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import TagNav from "../components/TagsNav";
 import extractCookieSession from "../actions/extract-cookie-session.action";
 import ImageCard from "../components/ImageCard";
+import { Button } from "../components/ui/button";
 
 export type imageData = {
   public_id: string;
