@@ -36,13 +36,14 @@ export default function ImageCard(props: ImageCardProps) {
 
   return (
     <>
-      <div key={image.url}>
+      <div key={image.url} className="w-full">
         <Link href={`photos/${image.public_id}`} key={image.public_id}>
           <CCldImage
+            className="w-full"
             src={image.public_id}
             alt="image"
-            height={100}
-            width={100}
+            width={300}
+            height={300}
           />
         </Link>
         <FavTag publicId={image.public_id} isFav={isFav(image.tags)} />

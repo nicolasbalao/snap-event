@@ -59,8 +59,8 @@ export default async function GalleryPage({
   }
 
   return (
-    <main>
-      <div className="flex justify-between items-center mb-6">
+    <main className="p-0">
+      <div className="flex justify-between items-center mb-6 w-full">
         <div>
           <form action={search}>
             <input type="search" name="query" />
@@ -80,7 +80,7 @@ export default async function GalleryPage({
         )}
       </div>
       <TagNav />
-      <div className="grid grid-cols-4 gap-4">
+      <div className="flex flex-col items-center w-full md:grid grid-cols-4 gap-4">
         {resources &&
           resources.map((image: imageData) => (
             <ImageCard image={image} isAdmin={isAdmin} key={image.public_id} />
