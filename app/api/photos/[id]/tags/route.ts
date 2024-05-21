@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
 import addTags from "../../../../../actions/add-tags.action";
+import { revalidateTag } from "next/cache";
 
 export const dynamic = "force-dynamic";
 
@@ -28,6 +29,8 @@ export async function PUT(
 
   await addTags(publicId, tags);
 
+  revalidateTag("tags");
+
   return Response.json({ publicId, tags });
 }
 
@@ -39,6 +42,8 @@ export async function DELETE(
   const { tag } = await request.json();
 
   await cloudinary.uploader.remove_tag(tag, [publicId]);
+
+  revalidateTag("tags");
 
   return Response.json({ publicId, tag });
 }
