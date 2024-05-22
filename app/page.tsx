@@ -6,13 +6,14 @@ import { redirect } from "next/navigation";
 import TagNav from "../components/TagsNav";
 import extractCookieSession from "../actions/extract-cookie-session.action";
 import ImageCard from "../components/ImageCard";
-import { Button } from "../components/ui/button";
 
 export type imageData = {
   public_id: string;
   url: string;
   secure_url: string;
   tags: string[];
+  width: number;
+  height: number;
 };
 
 export const dynamic = "force-dynamic";
@@ -67,7 +68,6 @@ export default async function GalleryPage({
             <input type="search" name="query" />
           </form>
         </div>
-        <h1 className="text-3xl">Gallery page</h1>
         {isAdmin && (
           <div>
             <UploadButton />
@@ -84,7 +84,13 @@ export default async function GalleryPage({
       <div className="flex flex-col  items-center w-full md:grid grid-cols-4 gap-6">
         {resources &&
           resources.map((image: imageData) => (
-            <ImageCard image={image} isAdmin={isAdmin} key={image.public_id} />
+            <ImageCard
+              image={image}
+              isAdmin={isAdmin}
+              width={image.width}
+              height={image.height}
+              key={image.public_id}
+            />
           ))}
       </div>
     </main>

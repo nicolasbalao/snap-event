@@ -11,6 +11,8 @@ import { PiTrashSimpleLight } from "react-icons/pi";
 type ImageCardProps = {
   image: imageData;
   isAdmin: boolean;
+  width: number;
+  height: number;
 };
 
 function isFav(tags: string[]) {
@@ -19,7 +21,7 @@ function isFav(tags: string[]) {
 }
 
 export default function ImageCard(props: ImageCardProps) {
-  const { image, isAdmin } = props;
+  const { image, isAdmin, width, height } = props;
 
   async function deleteImage(data: any) {
     "use server";
@@ -38,14 +40,15 @@ export default function ImageCard(props: ImageCardProps) {
 
   return (
     <>
-      <div key={image.url} className="w-full">
+      <div key={image.url} className="">
         <Link href={`photos/${image.public_id}`} key={image.public_id}>
           <CCldImage
-            className="w-full"
             src={image.public_id}
+            layout="responsive"
             alt="image"
-            width={300}
-            height={300}
+            size="100vw"
+            width={width}
+            height={height}
           />
         </Link>
         <div className="flex justify-between  items-center p-2">
