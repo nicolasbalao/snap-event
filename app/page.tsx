@@ -1,12 +1,11 @@
 import { v2 as cloudinary } from "cloudinary";
-import UploadButton from "../components/UploadButton";
-import Link from "next/link";
-import { unstable_cache } from "next/cache";
+import { unstable_cache, unstable_noStore } from "next/cache";
 import { redirect } from "next/navigation";
 import TagNav from "../components/TagsNav";
 import extractCookieSession from "../actions/extract-cookie-session.action";
 import ImageCard from "../components/ImageCard";
 import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
+import SearchBar from "../components/searchBar";
 
 export type imageData = {
   public_id: string;
@@ -39,6 +38,12 @@ const cachedGallery = unstable_cache(
   }
 );
 
+async function getTags() {
+  unstable_noStore();
+  const { tags }: { tags: string[] } = await cloudinary.api.tags();
+  return tags;
+}
+
 export default async function GalleryPage({
   searchParams,
 }: {
@@ -47,6 +52,7 @@ export default async function GalleryPage({
   const session: any = await extractCookieSession();
   const isAdmin: boolean = session?.role === "admin";
   const query = searchParams.query;
+  const tags = await getTags();
 
   let expression = "resource_type:image";
 
@@ -63,11 +69,8 @@ export default async function GalleryPage({
 
   return (
     <main className="p-0">
-      <div className="p-2">
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+      <div className="p-2 mb-4">
+        <SearchBar tags={tags} selectedTag={query} />
         {/* <div>
           <form action={search}>
             <input type="search" name="query" />
@@ -84,7 +87,7 @@ export default async function GalleryPage({
             </button>
           </div>
         )} */}
-        <TagNav selectedTag={query} />
+        {/* <TagNav selectedTag={query} tags={tags} /> */}
       </div>
       <div className="flex flex-col  items-center w-full md:grid grid-cols-4 gap-6">
         {resources &&
