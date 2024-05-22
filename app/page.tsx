@@ -62,8 +62,8 @@ export default async function GalleryPage({
 
   return (
     <main className="p-0">
-      <div className="flex justify-between items-center mb-6">
-        <div>
+      <div className="flex justify-between items-center ">
+        {/* <div>
           <form action={search}>
             <input type="search" name="query" />
           </form>
@@ -78,9 +78,9 @@ export default async function GalleryPage({
               <Link href="/magic-link/generate">Create Magic link</Link>
             </button>
           </div>
-        )}
+        )} */}
       </div>
-      <TagNav />
+      <TagNav selectedTag={query} />
       <div className="flex flex-col  items-center w-full md:grid grid-cols-4 gap-6">
         {resources &&
           resources.map((image: imageData) => (
