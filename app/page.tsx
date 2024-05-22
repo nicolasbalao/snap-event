@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import TagNav from "../components/TagsNav";
 import extractCookieSession from "../actions/extract-cookie-session.action";
 import ImageCard from "../components/ImageCard";
+import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
 
 export type imageData = {
   public_id: string;
@@ -62,7 +63,11 @@ export default async function GalleryPage({
 
   return (
     <main className="p-0">
-      <div className="flex justify-between items-center ">
+      <div className="p-2">
+        <Avatar>
+          <AvatarImage src="https://github.com/shadcn.png" />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
         {/* <div>
           <form action={search}>
             <input type="search" name="query" />
@@ -79,8 +84,8 @@ export default async function GalleryPage({
             </button>
           </div>
         )} */}
+        <TagNav selectedTag={query} />
       </div>
-      <TagNav selectedTag={query} />
       <div className="flex flex-col  items-center w-full md:grid grid-cols-4 gap-6">
         {resources &&
           resources.map((image: imageData) => (

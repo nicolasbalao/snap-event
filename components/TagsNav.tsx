@@ -14,7 +14,7 @@ export default async function TagNav(props: TagNavProps) {
   const { selectedTag } = props;
 
   return (
-    <div className="flex gap-2 text-xl m-6">
+    <div className="flex flex-wrap gap-2 my-4">
       {tags.map((tag, index) => (
         <Link
           key={tag + index}
