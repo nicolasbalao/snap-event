@@ -24,7 +24,7 @@ export function DialogShareUpload() {
 
   return (
     <DialogCopyClipBoard
-      title="Partager l'accès au telechargement de photo"
+      title="Partager l'accès au dépot de photos"
       buttonValue="QR code"
       description="Le QR code est valid pendant 1 semaine"
       value={url}

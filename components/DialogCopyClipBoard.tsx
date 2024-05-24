@@ -1,6 +1,6 @@
 "use client";
 import { Label } from "@radix-ui/react-label";
-import { Share2, CopyCheck, Copy } from "lucide-react";
+import { CopyCheck, Copy } from "lucide-react";
 import { Button } from "./ui/button";
 import {
   DialogHeader,
@@ -14,6 +14,7 @@ import {
 } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { useState } from "react";
+import React from "react";
 
 type DialogCopyClipBoardProps = {
   value: string;
@@ -27,10 +28,36 @@ export default function DialogCopyClipBoard(props: DialogCopyClipBoardProps) {
   const { value, children, buttonValue, title, description, icon } = props;
 
   const [isCopied, setIsCopied] = useState(false);
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   const handleCopyToClipboard = () => {
-    navigator.clipboard.writeText(value);
-    setIsCopied(true);
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(value);
+      setIsCopied(true);
+    } else {
+      const input = inputRef.current;
+      if (!input) return;
+      input.select();
+
+      input.setSelectionRange(0, input.value.length);
+      try {
+        if (!document.execCommand("copy")) {
+          throw new Error(`failed to execute copy command`);
+        }
+      } catch (e) {
+        // tslint:disable-next-line
+        console.warn("Warning! Could not copy to clipboard.", e);
+        throw new Error("Could not copy to clipboard");
+      }
+
+      // Clear selection post-feedback
+      if (inputRef.current) {
+        inputRef.current.focus();
+        inputRef.current.setSelectionRange(0, 0);
+      }
+
+      setIsCopied(true);
+    }
     setTimeout(() => {
       setIsCopied(false);
     }, 2000);
@@ -54,7 +81,7 @@ export default function DialogCopyClipBoard(props: DialogCopyClipBoardProps) {
             <Label htmlFor="link" className="sr-only">
               Link
             </Label>
-            <Input id="link" defaultValue={value} readOnly />
+            <Input id="link" ref={inputRef} defaultValue={value} readOnly />
           </div>
           <Button type="submit" size="sm" className="px-3">
             <span className="sr-only">Copier</span>
