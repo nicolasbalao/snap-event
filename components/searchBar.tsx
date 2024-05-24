@@ -12,6 +12,7 @@ import {
 } from "./ui/command";
 import UploadButton from "./UploadButton";
 import { DialogMagicLink } from "./DialogMagicLink";
+import { DialogShareUpload } from "./DialogShareUpload";
 
 type SearchBarProps = {
   tags: string[];
@@ -46,7 +47,9 @@ export default function SearchBar(props: SearchBarProps) {
             <CommandItem>
               <DialogMagicLink />
             </CommandItem>
-            <CommandItem>Share upload</CommandItem>
+            <CommandItem>
+              <DialogShareUpload />
+            </CommandItem>
             <CommandItem>
               <div>
                 <UploadButton />

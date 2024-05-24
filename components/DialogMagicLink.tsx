@@ -28,7 +28,7 @@ export function DialogMagicLink() {
     }, 2000);
   };
 
-  useEffect(() => {
+  const fetchMagicLink = () => {
     const resp = fetch("/api/magic-link/generate", { cache: "no-store" });
     resp
       .then((res) => res.json())
@@ -37,10 +37,14 @@ export function DialogMagicLink() {
           setMagicLink(data.magicLink);
         }
       });
+  };
+
+  useEffect(() => {
+    fetchMagicLink();
   }, []);
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={fetchMagicLink}>
       <DialogTrigger asChild>
         <div className="flex item-center gap-2">
           <Share2 size={16} />

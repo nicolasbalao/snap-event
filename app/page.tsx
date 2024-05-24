@@ -7,6 +7,7 @@ import ImageCard from "../components/ImageCard";
 import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
 import SearchBar from "../components/searchBar";
 import { DialogMagicLink } from "../components/DialogMagicLink";
+import { DialogShareUpload } from "../components/DialogShareUpload";
 
 export type imageData = {
   public_id: string;
