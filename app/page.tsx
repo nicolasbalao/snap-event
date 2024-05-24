@@ -6,6 +6,7 @@ import extractCookieSession from "../actions/extract-cookie-session.action";
 import ImageCard from "../components/ImageCard";
 import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
 import SearchBar from "../components/searchBar";
+import { DialogMagicLink } from "../components/DialogMagicLink";
 
 export type imageData = {
   public_id: string;

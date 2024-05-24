@@ -10,6 +10,8 @@ import {
   CommandList,
   CommandSeparator,
 } from "./ui/command";
+import UploadButton from "./UploadButton";
+import { DialogMagicLink } from "./DialogMagicLink";
 
 type SearchBarProps = {
   tags: string[];
@@ -41,9 +43,15 @@ export default function SearchBar(props: SearchBarProps) {
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading="Actions">
-            <CommandItem>Calendar</CommandItem>
-            <CommandItem>Search Emoji</CommandItem>
-            <CommandItem>Calculator</CommandItem>
+            <CommandItem>
+              <DialogMagicLink />
+            </CommandItem>
+            <CommandItem>Share upload</CommandItem>
+            <CommandItem>
+              <div>
+                <UploadButton />
+              </div>
+            </CommandItem>
           </CommandGroup>
           <CommandSeparator />
           <CommandGroup heading="Tags">
