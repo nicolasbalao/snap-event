@@ -64,10 +64,6 @@ export default async function GalleryPage({
 
   const resources = await cachedGallery(expression);
 
-  async function search(data: FormData) {
-    "use server";
-    redirect(`/?query=${data.get("query")}`);
-  }
 
   return (
     <main className="p-0">
