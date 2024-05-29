@@ -8,10 +8,11 @@ import { Badge } from "./ui/badge";
 
 type TagInputProps = {
   public_id: string;
+  setIsModified: (state: boolean) => void;
 };
 
 export default function TagInput(props: TagInputProps) {
-  const { public_id } = props;
+  const { public_id, setIsModified } = props;
 
   const [existingTags, setExistingTags] = useState<string[]>([]);
   const [newTags, setNewTags] = useState<string[]>([]);
@@ -41,6 +42,7 @@ export default function TagInput(props: TagInputProps) {
       if (res.ok) {
         const data = await res.json();
         const { tags } = data;
+        setIsModified(true);
         setExistingTags(tags);
         setNewTags([]);
       } else {
@@ -62,6 +64,7 @@ export default function TagInput(props: TagInputProps) {
       }).then((res) => {
         if (res.ok) {
           setExistingTags(existingTags.filter((t) => t !== tag));
+          setIsModified(true);
         } else {
           console.error(res.statusText);
         }
@@ -77,7 +80,7 @@ export default function TagInput(props: TagInputProps) {
 
   return (
     <>
-      <div className="bg-white w-full p-2  mt-5 flex flex-col gap-6 sm:gap-4 md:rounded">
+      <div className="bg-white w-full p-2 mt-3  flex flex-col gap-6 self-start sm:gap-4 md:rounded">
         <div className="flex items-center gap-2">
           <Tags />
           <h2 className="text-base font-normal md:text-xl md:font-semibold">

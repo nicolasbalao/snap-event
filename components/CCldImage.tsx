@@ -1,13 +1,9 @@
 "use client";
-import { CldImage } from "next-cloudinary";
-import React, { ComponentPropsWithoutRef } from "react";
+import { CldImage, CldImageProps } from "next-cloudinary";
+import React from "react";
 
-function CCldImage(props: any) {
-  return (
-    <>
-    <CldImage {...props} />
-    </>
-  );
+function CCldImage(props: CldImageProps) {
+  return <CldImage {...props} />;
 }
 
 export default CCldImage;
