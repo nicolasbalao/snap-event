@@ -49,7 +49,7 @@ export default function PhotoModal({ params }: { params: any }) {
               <X size={16} />
             </div>
           </div>
-          <TagInput public_id={public_id} />
+          <TagInput public_id={public_id} setIsModified={setIsModified} />
         </div>
       </div>
     </>
