@@ -8,7 +8,6 @@ export function DialogShareUpload() {
   const [url, setUrl] = useState<string>("");
 
   const fetchUploadUrl = () => {
-    console.log("Fetch upload url");
     fetch("/api/generate-upload-link", { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {

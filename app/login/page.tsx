@@ -8,9 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../../components/ui/card";
-import { Input } from "../../components/ui/input";
 import { Button } from "../../components/ui/button";
-import { Eye } from "lucide-react";
 import { PasswordInput } from "../../components/PasswordInput";
 
 export default function Page() {
