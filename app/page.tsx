@@ -73,23 +73,6 @@ export default async function GalleryPage({
     <main className="p-0">
       <div className="p-2 mb-4">
         <SearchBar tags={tags} selectedTag={query} />
-        {/* <div>
-          <form action={search}>
-            <input type="search" name="query" />
-          </form>
-        </div>
-        {isAdmin && (
-          <div>
-            <UploadButton />
-            <button className="bg-lime-600 text-white p-2 rounded">
-              <a href="/link">Create link</a>
-            </button>
-            <button className="bg-lime-600 text-white p-2 rounded">
-              <Link href="/magic-link/generate">Create Magic link</Link>
-            </button>
-          </div>
-        )} */}
-        {/* <TagNav selectedTag={query} tags={tags} /> */}
       </div>
       <div className="flex flex-col  items-center w-full md:grid grid-cols-4 gap-6">
         {resources &&

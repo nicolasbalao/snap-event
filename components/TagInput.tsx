@@ -6,6 +6,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Tags, X } from "lucide-react";
 import { Badge } from "./ui/badge";
+import { revalidateTag } from "next/cache";
 
 type TagInputProps = {
   public_id: string;
