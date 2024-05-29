@@ -25,5 +25,5 @@ export default function DownloadButton(props: DownloadButtonProps) {
     }
   }
 
-  return <Button onClick={handleDownload} size={"sm"}>Download</Button>;
+  return <Button onClick={handleDownload} size={"sm"}>Télécharger</Button>;
 }
