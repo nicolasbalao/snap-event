@@ -41,14 +41,18 @@ export default function ImageCard(props: ImageCardProps) {
   return (
     <>
       <div key={image.url} className="">
-        <Link href={`photos/${image.public_id}`} key={image.public_id} scroll={false}>
+        <Link
+          href={`photos/${image.public_id}`}
+          key={image.public_id}
+          scroll={false}
+        >
           <CCldImage
             src={image.public_id}
-            layout="responsive"
             alt="image"
-            size="100vw"
+            sizes="100vw"
             width={width}
             height={height}
+            className="aspect-auto"
           />
         </Link>
         <div className="flex justify-between  items-center p-2">
