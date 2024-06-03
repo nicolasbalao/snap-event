@@ -1,8 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import HeartIcon from "./HeartIcon";
 import { useRouter } from "next/navigation";
+import { Badge } from "./ui/badge";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { IconContext } from "react-icons";
+import "tailwindcss/tailwind.css";
 
 type FavTagProps = {
   publicId: string;
@@ -54,7 +57,15 @@ export default function FavTag(props: FavTagProps) {
   return (
     <form action={toggleFavorite}>
       <button type="submit">
-        <HeartIcon isFilled={isFavorited} />
+        <Badge variant="outline">
+          {isFavorited ? (
+            <IconContext.Provider value={{ color: "red" }}>
+              <FaHeart className="animate-fadeIn" size="1.2rem" />
+            </IconContext.Provider>
+          ) : (
+            <FaRegHeart className="animate-fadeIn" size="1.2rem" />
+          )}
+        </Badge>
       </button>
     </form>
   );

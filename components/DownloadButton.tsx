@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "./ui/button";
+
 type DownloadButtonProps = { url: string };
 
 export default function DownloadButton(props: DownloadButtonProps) {
@@ -23,5 +25,5 @@ export default function DownloadButton(props: DownloadButtonProps) {
     }
   }
 
-  return <button onClick={handleDownload}>Download</button>;
+  return <Button onClick={handleDownload} size={"sm"}>Télécharger</Button>;
 }

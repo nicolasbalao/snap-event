@@ -21,7 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         {modal}
-        <div className="flex items-center justify-center h-full w-full p-6 bg-orange-100 text-purple-900 text-opacity-70">
+        <div className="flex items-center justify-center h-full w-full">
           {children}
         </div>
       </body>

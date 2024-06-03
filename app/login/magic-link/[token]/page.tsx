@@ -1,11 +1,14 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Button } from "../../../../components/ui/button";
 
 export default function MagicLinkSingIn({ params }: { params: any }) {
   const { token } = params;
 
   const [isValideToke, setIsValideToken] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     fetch(`/api/auth/login/magic-link`, {
@@ -17,6 +20,7 @@ export default function MagicLinkSingIn({ params }: { params: any }) {
     }).then((res) => {
       if (res.status === 200) {
         setIsValideToken(true);
+        router.push("/");
       }
     });
   }, []);
@@ -26,9 +30,9 @@ export default function MagicLinkSingIn({ params }: { params: any }) {
       {isValideToke ? (
         <div>
           <h1>Access limité à 1 semaine (à changé)</h1>
-          <button className="bg-blue-700 p-2 rounded-md text-white">
+          <Button className="bg-blue-700 p-2 rounded-md text-white">
             <Link href="/">Gallery</Link>
-          </button>
+          </Button>
         </div>
       ) : (
         <div>

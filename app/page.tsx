@@ -1,19 +1,16 @@
 import { v2 as cloudinary } from "cloudinary";
-import CCldImage from "../components/CCldImage";
-import UploadButton from "../components/UploadButton";
-import Link from "next/link";
-import { revalidateTag, unstable_cache } from "next/cache";
-import { redirect } from "next/navigation";
-import TagNav from "../components/TagsNav";
+import { unstable_cache, unstable_noStore } from "next/cache";
 import extractCookieSession from "../actions/extract-cookie-session.action";
-import DownloadButton from "../components/DownloadButton";
-import FavTag from "../components/favTag";
+import ImageCard from "../components/ImageCard";
+import SearchBar from "../components/searchBar";
 
-type imageData = {
+export type imageData = {
   public_id: string;
   url: string;
   secure_url: string;
   tags: string[];
+  width: number;
+  height: number;
 };
 
 export const dynamic = "force-dynamic";
@@ -38,9 +35,10 @@ const cachedGallery = unstable_cache(
   }
 );
 
-function isFav(tags: string[]) {
-  if (!tags) return false;
-  return tags.includes("favoris");
+async function getTags() {
+  unstable_noStore();
+  const { tags }: { tags: string[] } = await cloudinary.api.tags();
+  return tags;
 }
 
 export default async function GalleryPage({
@@ -51,6 +49,7 @@ export default async function GalleryPage({
   const session: any = await extractCookieSession();
   const isAdmin: boolean = session?.role === "admin";
   const query = searchParams.query;
+  const tags = await getTags();
 
   let expression = "resource_type:image";
 
@@ -60,73 +59,22 @@ export default async function GalleryPage({
 
   const resources = await cachedGallery(expression);
 
-  async function search(data: FormData) {
-    "use server";
-    redirect(`/?query=${data.get("query")}`);
-  }
-
-  async function deleteImage(data: any) {
-    "use server";
-    if (!isAdmin) {
-      return null;
-    }
-    const public_id = data.get("public_id");
-    const { result }: { result: string } = await cloudinary.uploader.destroy(
-      public_id
-    );
-
-    if (result === "ok") {
-      revalidateTag("gallery");
-    }
-  }
 
   return (
-    <main>
-      <div className="flex justify-between items-center mb-6">
-        <div>
-          <form action={search}>
-            <input type="search" name="query" />
-          </form>
-        </div>
-        <h1 className="text-3xl">Gallery page</h1>
-        {isAdmin && (
-          <div>
-            <UploadButton />
-            <button className="bg-lime-600 text-white p-2 rounded">
-              <a href="/link">Create link</a>
-            </button>
-            <button className="bg-lime-600 text-white p-2 rounded">
-              <Link href="/magic-link/generate">Create Magic link</Link>
-            </button>
-          </div>
-        )}
+    <main className="p-0">
+      <div className="p-2 mb-4">
+        <SearchBar tags={tags} selectedTag={query} />
       </div>
-      <TagNav />
-      <div className="grid grid-cols-4 gap-4">
+      <div className="flex flex-col  items-center w-full md:grid grid-cols-4 gap-6">
         {resources &&
           resources.map((image: imageData) => (
-            <div key={image.url}>
-              <Link href={`photos/${image.public_id}`} key={image.public_id}>
-                <CCldImage
-                  src={image.public_id}
-                  alt="image"
-                  height={100}
-                  width={100}
-                />
-              </Link>
-              <FavTag publicId={image.public_id} isFav={isFav(image.tags)} />
-              <DownloadButton url={image.secure_url} />
-              {isAdmin && (
-                <form action={deleteImage}>
-                  <input
-                    type="hidden"
-                    name="public_id"
-                    value={image.public_id}
-                  />
-                  <button type="submit">X</button>
-                </form>
-              )}
-            </div>
+            <ImageCard
+              image={image}
+              isAdmin={isAdmin}
+              width={image.width}
+              height={image.height}
+              key={image.public_id}
+            />
           ))}
       </div>
     </main>
