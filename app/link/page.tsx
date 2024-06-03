@@ -1,13 +1,11 @@
 import React from "react";
-import * as jwt from "jsonwebtoken";
 import { QRCodeSVG } from "qrcode.react";
+import generateTokenAction from "../../actions/generate-token.action";
 
 export const dynamic = "auto";
 
-function LinkPage() {
-  const token = jwt.sign({ foo: "bar" }, process.env.JWT_KEY as string, {
-    expiresIn: "1h",
-  });
+async function LinkPage() {
+  const token = await generateTokenAction({ role: "guest" }, "1w");
 
   const baseUrl = (process.env.BASE_URL as string)
     ? "http://" + (process.env.BASE_URL as string)

@@ -1,14 +1,14 @@
 import { cookies } from "next/headers";
-import jwt from "jsonwebtoken";
+import { verifyTokenAction } from "./verify-token";
 
-export default async function extractCookieSession() {
+export default async function extractUserFromSession() {
   const cookieStore: any = cookies();
 
   const sessionCookie: any = cookieStore.get("Session");
 
   const sessionToken = sessionCookie.value;
 
-  const session = jwt.decode(sessionToken);
+  const session = await verifyTokenAction(sessionToken);
 
   return session;
 }

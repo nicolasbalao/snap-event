@@ -1,15 +1,13 @@
 import React from "react";
-import * as jwt from "jsonwebtoken";
 import { Card, CardContent } from "../../../components/ui/card";
 import { Image } from "lucide-react";
 import { UploadButtonShadcn } from "../../../components/UploadButtonShadcn";
+import { verifyTokenAction } from "../../../actions/verify-token";
 
-function UploadTokenPage({ params }: { params: { token: string } }) {
+async function UploadTokenPage({ params }: { params: { token: string } }) {
   const { token } = params;
 
-  const isValid = jwt.verify(token, process.env.JWT_KEY as string)
-    ? true
-    : false;
+  const isValid: boolean = (await verifyTokenAction(token)) ? true : false;
 
   return (
     <section className="h-screen flex flex-col items-center justify-center p-3 gap-8">

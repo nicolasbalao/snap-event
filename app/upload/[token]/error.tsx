@@ -2,7 +2,7 @@
 import React from "react";
 
 function UploadTokenErro() {
-  return <div>Invalide token</div>;
+  return <div>Lien expiré ou invalide</div>;
 }
 
 export default UploadTokenErro;

@@ -1,12 +1,16 @@
 "use server";
 
-import * as jwt from "jsonwebtoken";
+import { SignJWT } from "jose";
 
 export default async function generateTokenAction(
-  payload: object,
+  payload: any,
   expiresIn: number | string
 ): Promise<string> {
-  return jwt.sign(payload, process.env.JWT_KEY as string, {
-    expiresIn,
-  });
+  const secret = new TextEncoder().encode(process.env.JWT_KEY as string);
+
+  return await new SignJWT(payload)
+    .setProtectedHeader({ alg: "HS256" })
+    .setIssuedAt()
+    .setExpirationTime(expiresIn)
+    .sign(secret);
 }

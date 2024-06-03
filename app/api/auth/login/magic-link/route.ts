@@ -1,5 +1,5 @@
-import * as jwt from "jsonwebtoken";
 import setCookieAction from "../../../../../actions/generate-auth-cookie.action";
+import { verifyTokenAction } from "../../../../../actions/verify-token";
 
 export const dynamic = "force-dynamic";
 
@@ -8,9 +8,7 @@ export async function POST(request: Request) {
   const { token } = body;
 
   try {
-    const isValid = jwt.verify(token, process.env.JWT_KEY as string)
-      ? true
-      : false;
+    const isValid: boolean = (await verifyTokenAction(token)) ? true : false;
 
     if (!isValid) {
       return Response.json({ error: "Invalid token" }, { status: 401 });
