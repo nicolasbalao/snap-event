@@ -1,6 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
 import { unstable_cache, unstable_noStore } from "next/cache";
-import extractCookieSession from "../actions/extract-cookie-session.action";
+import extractUserFromSession from "../actions/extract-cookie-session.action";
 import ImageCard from "../components/ImageCard";
 import SearchBar from "../components/searchBar";
 
@@ -46,8 +46,8 @@ export default async function GalleryPage({
 }: {
   searchParams: any;
 }) {
-  const session: any = await extractCookieSession();
-  const isAdmin: boolean = session?.role === "admin";
+  const user: any = await extractUserFromSession();
+  const isAdmin: boolean = user?.role === "admin";
   const query = searchParams.query;
   const tags = await getTags();
 
@@ -58,7 +58,6 @@ export default async function GalleryPage({
   }
 
   const resources = await cachedGallery(expression);
-
 
   return (
     <main className="p-0">

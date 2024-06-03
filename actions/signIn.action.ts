@@ -1,8 +1,8 @@
 "use server";
 
 import { cookies } from "next/headers";
-import * as jwt from "jsonwebtoken";
 import { redirect } from "next/navigation";
+import generateTokenAction from "./generate-token.action";
 
 export default async function SignInAction(
   currentState: any,
@@ -26,11 +26,10 @@ export default async function SignInAction(
   }
 
   // 3. If password is correct set cookie with admin privs
-  const sessionToken: string = jwt.sign(
+  const sessionToken: string = await generateTokenAction(
     { role: "admin" },
-    process.env.JWT_KEY as string
+    "1w"
   );
-
   cookies().set("Session", sessionToken, {
     secure: process.env.NODE_ENV === "production",
     httpOnly: true,
