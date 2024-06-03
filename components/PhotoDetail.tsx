@@ -1,7 +1,7 @@
 "use client";
 import TagInput from "./TagInput";
 import CCldImage from "./CCldImage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -15,6 +15,8 @@ export default function PhotoDetails(props: PhotoDetailsProps) {
 
   const [isModified, setIsModified] = useState(false);
 
+  const [isAdmin, setIsAdmin] = useState(false);
+
   const router = useRouter();
 
   const closeWindow = () => {
@@ -23,6 +25,20 @@ export default function PhotoDetails(props: PhotoDetailsProps) {
       router.refresh();
     }
   };
+
+  const fetchUser = () => {
+    fetch("/api/auth/profile", { cache: "no-store" })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.role === "admin") {
+          setIsAdmin(true);
+        }
+      });
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   return (
     <div className="flex flex-col justify-center items-center w-screen md:w-1/2">
@@ -45,7 +61,9 @@ export default function PhotoDetails(props: PhotoDetailsProps) {
           </div>
         )}
       </div>
-      <TagInput public_id={public_id} setIsModified={setIsModified} />
+      {isAdmin && (
+        <TagInput public_id={public_id} setIsModified={setIsModified} />
+      )}
     </div>
   );
 }
