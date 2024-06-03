@@ -17,10 +17,12 @@ import { DialogShareUpload } from "./DialogShareUpload";
 type SearchBarProps = {
   tags: string[];
   selectedTag: string;
+  isAdmin?: boolean;
 };
 
 export default function SearchBar(props: SearchBarProps) {
-  const { selectedTag, tags } = props;
+  const { selectedTag, tags, isAdmin } = props;
+
 
   const [filteredTags, setFilteredTags] = useState<string[]>(tags);
 
@@ -43,20 +45,24 @@ export default function SearchBar(props: SearchBarProps) {
         />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading="Actions">
-            <CommandItem>
-              <DialogMagicLink />
-            </CommandItem>
-            <CommandItem>
-              <DialogShareUpload />
-            </CommandItem>
-            <CommandItem>
-              <div>
-                <UploadButton />
-              </div>
-            </CommandItem>
-          </CommandGroup>
-          <CommandSeparator />
+          {isAdmin && (
+            <div>
+              <CommandGroup heading="Actions">
+                <CommandItem>
+                  <DialogMagicLink />
+                </CommandItem>
+                <CommandItem>
+                  <DialogShareUpload />
+                </CommandItem>
+                <CommandItem>
+                  <div>
+                    <UploadButton />
+                  </div>
+                </CommandItem>
+              </CommandGroup>
+              <CommandSeparator />
+            </div>
+          )}
           <CommandGroup heading="Tags">
             <CommandItem>
               <TagNav selectedTag={selectedTag} tags={filteredTags} />
