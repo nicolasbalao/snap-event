@@ -16,7 +16,7 @@ async function UploadTokenPage({ params }: { params: { token: string } }) {
           <CardContent className="flex flex-col items-center gap-4">
             <Image size={60} className="mt-3" />
             <p className="text-center text-gray-500 text-sm mb-3">
-              Parcourez et choisissez les photos que vous souhaitez télécharger
+              Parcourez et choisissez les photos que vous souhaitez publier
             </p>
             <UploadButtonShadcn />
           </CardContent>
