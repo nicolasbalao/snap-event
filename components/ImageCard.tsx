@@ -55,10 +55,10 @@ export default function ImageCard(props: ImageCardProps) {
             className="aspect-auto"
           />
         </Link>
-        <div className="flex justify-between  items-center p-2">
-          <div className="flex gap-2">
-            <FavTag publicId={image.public_id} isFav={isFav(image.tags)} />
-            {isAdmin && (
+        <div className="flex justify-between items-center p-2">
+          {isAdmin && (
+            <div className="flex gap-2">
+              <FavTag publicId={image.public_id} isFav={isFav(image.tags)} />
               <form action={deleteImage}>
                 <input type="hidden" name="public_id" value={image.public_id} />
                 <button type="submit">
@@ -67,9 +67,9 @@ export default function ImageCard(props: ImageCardProps) {
                   </Badge>
                 </button>
               </form>
-            )}
-          </div>
-          <DownloadButton url={image.secure_url} />
+            </div>
+          )}
+          <DownloadButton className="ml-auto" url={image.secure_url} />
         </div>
       </div>
     </>

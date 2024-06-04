@@ -2,7 +2,9 @@
 
 import { Button } from "./ui/button";
 
-type DownloadButtonProps = { url: string };
+type DownloadButtonProps = { url: string } & React.ComponentProps<
+  typeof Button
+>;
 
 export default function DownloadButton(props: DownloadButtonProps) {
   const { url } = props;
@@ -25,5 +27,9 @@ export default function DownloadButton(props: DownloadButtonProps) {
     }
   }
 
-  return <Button onClick={handleDownload} size={"sm"}>Télécharger</Button>;
+  return (
+    <Button onClick={handleDownload} size={"sm"} {...props}>
+      Télécharger
+    </Button>
+  );
 }

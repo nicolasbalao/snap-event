@@ -1,8 +1,5 @@
 "use client";
 import { useRouter } from "next/navigation";
-import CCldImage from "../../../../components/CCldImage";
-import TagInput from "../../../../components/TagInput";
-import { X } from "lucide-react";
 import { useState } from "react";
 import PhotoDetails from "../../../../components/PhotoDetail";
 

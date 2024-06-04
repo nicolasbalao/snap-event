@@ -30,7 +30,7 @@ export default function MagicLinkSingIn({ params }: { params: any }) {
       {isValideToke ? (
         <div>
           <h1>Access limité à 1 semaine (à changé)</h1>
-          <Button className="bg-blue-700 p-2 rounded-md text-white">
+          <Button>
             <Link href="/">Gallery</Link>
           </Button>
         </div>
