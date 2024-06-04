@@ -26,7 +26,7 @@ export function DialogMagicLink() {
     <DialogCopyClipBoard
       title="Partager l'accès à la gallerie"
       buttonValue="Partager"
-      description="N'importe qui à ce lien peut accéder à la gallerie pendant 1 semaine."
+      description="N'importe qui utilise ce lien peut accéder à la gallerie pendant 1 semaine."
       value={magicLink}
       icon={<Share2 size={16} />}
       onOpenChange={fetchMagicLink}
