@@ -64,7 +64,7 @@ export default async function GalleryPage({
       <div className="p-2 mb-4">
         <SearchBar tags={tags} selectedTag={query} isAdmin={isAdmin} />
       </div>
-      <div className="flex flex-col  items-center w-full md:grid grid-cols-4 gap-6">
+      <div className="flex flex-col  items-center w-full md:grid grid-cols-4 gap-6 md:p-4">
         {resources &&
           resources.map((image: imageData) => (
             <ImageCard
