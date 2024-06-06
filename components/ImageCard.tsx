@@ -40,7 +40,7 @@ export default function ImageCard(props: ImageCardProps) {
 
   return (
     <>
-      <div key={image.url} className="">
+      <div key={image.url}>
         <Link
           href={`photos/${image.public_id}`}
           key={image.public_id}
@@ -50,9 +50,10 @@ export default function ImageCard(props: ImageCardProps) {
             src={image.public_id}
             alt="image"
             sizes="100vw"
-            width={width}
-            height={height}
-            className="aspect-auto"
+            height="500"
+            width="600"
+            crop="fill"
+            className="md:rounded"
           />
         </Link>
         <div className="flex justify-between items-center p-2">
