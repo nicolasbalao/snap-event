@@ -15,6 +15,7 @@ import {
 import { Input } from "./ui/input";
 import { useState } from "react";
 import React from "react";
+import { useToast } from "./ui/use-toast";
 
 type DialogCopyClipBoardProps = {
   value: string;
@@ -29,6 +30,8 @@ export default function DialogCopyClipBoard(props: DialogCopyClipBoardProps) {
 
   const [isCopied, setIsCopied] = useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
+
+  const { toast } = useToast();
 
   const handleCopyToClipboard = () => {
     if (navigator.clipboard) {
@@ -61,6 +64,10 @@ export default function DialogCopyClipBoard(props: DialogCopyClipBoardProps) {
     setTimeout(() => {
       setIsCopied(false);
     }, 2000);
+    toast({
+      title: "Copié",
+      description: "Le lien a été copié dans le presse-papier",
+    });
   };
   return (
     <Dialog {...props}>
