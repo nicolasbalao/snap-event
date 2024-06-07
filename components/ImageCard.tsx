@@ -1,12 +1,14 @@
+"use client";
 import Link from "next/link";
 import { imageData } from "../app/page";
 import CCldImage from "./CCldImage";
 import DownloadButton from "./DownloadButton";
 import FavTag from "./favTag";
-import { revalidateTag } from "next/cache";
-import { v2 as cloudinary } from "cloudinary";
 import { Badge } from "./ui/badge";
 import { PiTrashSimpleLight } from "react-icons/pi";
+import { AlertDialogConfirmation } from "./AlertConfirmation";
+import { useRouter } from "next/navigation";
+import { useToast } from "./ui/use-toast";
 
 type ImageCardProps = {
   image: imageData;
@@ -21,22 +23,34 @@ function isFav(tags: string[]) {
 }
 
 export default function ImageCard(props: ImageCardProps) {
-  const { image, isAdmin, width, height } = props;
+  const { image, isAdmin } = props;
 
-  async function deleteImage(data: any) {
-    "use server";
-    if (!isAdmin) {
-      return null;
-    }
-    const public_id = data.get("public_id");
-    const { result }: { result: string } = await cloudinary.uploader.destroy(
-      public_id
-    );
+  const router = useRouter();
+  const { toast } = useToast();
 
-    if (result === "ok") {
-      revalidateTag("gallery");
-    }
-  }
+  const deleteImage = () => {
+    fetch(`/api/photos/${image.public_id}`, {
+      method: "DELETE",
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        if (data.result === "ok") {
+          console.info(`Image deleted ${image.public_id}`);
+          toast({
+            title: "Image supprimée avec succès",
+          });
+          router.refresh();
+        } else {
+          console.error(`Error deleting image ${image.public_id}`);
+          toast({
+            title: "Erreur",
+            description:
+              "Une erreur est survenue lors de la suppression de l'image",
+            variant: "destructive",
+          });
+        }
+      });
+  };
 
   return (
     <>
@@ -60,14 +74,11 @@ export default function ImageCard(props: ImageCardProps) {
           {isAdmin && (
             <div className="flex gap-2">
               <FavTag publicId={image.public_id} isFav={isFav(image.tags)} />
-              <form action={deleteImage}>
-                <input type="hidden" name="public_id" value={image.public_id} />
-                <button type="submit">
-                  <Badge variant="outline">
-                    <PiTrashSimpleLight size="1.2rem" fontWeight={"1.2rem"} />
-                  </Badge>
-                </button>
-              </form>
+              <AlertDialogConfirmation onConfirm={() => deleteImage()}>
+                <Badge variant="outline" className="cursor-pointer">
+                  <PiTrashSimpleLight size="1.2rem" fontWeight={"1.2rem"} />
+                </Badge>
+              </AlertDialogConfirmation>
             </div>
           )}
           <DownloadButton className="ml-auto" url={image.secure_url} />
