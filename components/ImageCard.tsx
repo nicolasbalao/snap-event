@@ -8,6 +8,7 @@ import { Badge } from "./ui/badge";
 import { PiTrashSimpleLight } from "react-icons/pi";
 import { AlertDialogConfirmation } from "./AlertConfirmation";
 import { useRouter } from "next/navigation";
+import { useToast } from "./ui/use-toast";
 
 type ImageCardProps = {
   image: imageData;
@@ -25,6 +26,7 @@ export default function ImageCard(props: ImageCardProps) {
   const { image, isAdmin } = props;
 
   const router = useRouter();
+  const { toast } = useToast();
 
   const deleteImage = () => {
     fetch(`/api/photos/${image.public_id}`, {
@@ -34,7 +36,18 @@ export default function ImageCard(props: ImageCardProps) {
       .then((data) => {
         if (data.result === "ok") {
           console.info(`Image deleted ${image.public_id}`);
+          toast({
+            title: "Image supprimée avec succès",
+          });
           router.refresh();
+        } else {
+          console.error(`Error deleting image ${image.public_id}`);
+          toast({
+            title: "Erreur",
+            description:
+              "Une erreur est survenue lors de la suppression de l'image",
+            variant: "destructive",
+          });
         }
       });
   };
