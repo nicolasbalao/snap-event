@@ -50,7 +50,7 @@ export default function PhotoDetails(props: PhotoDetailsProps) {
           sizes="100vw"
           width={0}
           height={0}
-          style={{ width: "100%", height: "auto", maxHeight: "80vh" }}
+          style={{ width: "100%", height: "auto", maxHeight: "60vh" }}
         />
         {isModal && (
           <div
