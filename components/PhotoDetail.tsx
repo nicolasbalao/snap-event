@@ -41,7 +41,7 @@ export default function PhotoDetails(props: PhotoDetailsProps) {
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center w-screen md:w-1/2">
+    <div className="flex flex-col lg:flex-row justify-center items-center w-screen lg:gap-4">
       <div className="relative">
         <CCldImage
           src={public_id}
@@ -50,7 +50,7 @@ export default function PhotoDetails(props: PhotoDetailsProps) {
           sizes="100vw"
           width={0}
           height={0}
-          style={{ width: "100%", height: "auto", maxHeight: "80vh" }}
+          style={{ width: "100%", height: "auto", maxHeight: "60vh" }}
         />
         {isModal && (
           <div
