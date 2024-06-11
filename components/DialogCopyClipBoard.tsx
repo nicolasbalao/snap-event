@@ -72,7 +72,7 @@ export default function DialogCopyClipBoard(props: DialogCopyClipBoardProps) {
   return (
     <Dialog {...props}>
       <DialogTrigger asChild>
-        <div className="flex item-center gap-2">
+        <div className="flex item-center gap-2 w-full">
           {icon}
           <p>{buttonValue}</p>
         </div>
