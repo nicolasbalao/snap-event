@@ -4,7 +4,6 @@ import { parse } from "url";
 
 export async function GET(request: NextRequest) {
   const { query } = parse(request.url, true);
-  console.log("Query", query);
   let { tags, cursor } = query;
 
   let expression: string = "resource_type:image";
