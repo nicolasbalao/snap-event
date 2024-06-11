@@ -33,30 +33,3 @@ export async function GET(request: NextRequest) {
     return Response.json({ resources, next_cursor });
   }
 }
-
-// import { NextRequest, NextResponse } from "next/server";
-// import { v2 as cloudinary } from "cloudinary";
-// import { parse } from "url";
-
-// export async function GET(request: NextRequest) {
-//   const { query } = parse(request.url, true);
-//   const { tags, cursor } = query;
-
-//   let expression = "resource_type:image";
-//   if (tags) {
-//     expression += ` AND tags=${tags}`;
-//   }
-
-//   const searchQuery = cloudinary.search
-//     .expression(expression)
-//     .with_field("tags")
-//     .sort_by("created_at", "desc")
-//     .max_results(11);
-
-//   if (cursor && cursor !== "null") {
-//     searchQuery.next_cursor(cursor as string);
-//   }
-
-//   const { resources, next_cursor } = await searchQuery.execute();
-//   return NextResponse.json({ resources, next_cursor });
-// }

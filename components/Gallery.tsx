@@ -14,7 +14,9 @@ export default function Gallery(props: GalleryProps) {
   const [nextCursor, setNextCursor] = useState<string | null>(null);
 
   const fetchPhotos = async (reset: boolean) => {
-    let url = `/api/photos${nextCursor && reset ? `?cursor=${nextCursor}` : ""}`;
+    let url = `/api/photos${
+      nextCursor && !reset ? `?cursor=${nextCursor}` : ""
+    }`;
 
     if (searchTag) {
       if (url.includes("?")) {
@@ -44,7 +46,6 @@ export default function Gallery(props: GalleryProps) {
       next={() => fetchPhotos(false)}
       hasMore={!!nextCursor}
       loader="Is loading"
-      endMessage="End message"
       className="flex flex-col  items-center w-full md:grid grid-cols-4 gap-6 md:p-4"
     >
       {resources &&
