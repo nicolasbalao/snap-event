@@ -64,7 +64,7 @@ export default async function GalleryPage({
       <div className="p-2 mb-4">
         <SearchBar tags={tags} selectedTag={query} isAdmin={isAdmin} />
       </div>
-      <Gallery searchTag={query} />
+      <Gallery searchTag={query} isAdmin={isAdmin} />
     </main>
   );
 }

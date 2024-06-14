@@ -6,10 +6,11 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 type GalleryProps = {
   searchTag: string | undefined;
+  isAdmin: boolean;
 };
 
 export default function Gallery(props: GalleryProps) {
-  const { searchTag } = props;
+  const { searchTag, isAdmin } = props;
   const [resources, setResources] = useState<imageData[]>([]);
   const [nextCursor, setNextCursor] = useState<string | null>(null);
 
@@ -52,7 +53,7 @@ export default function Gallery(props: GalleryProps) {
         resources.map((image: imageData) => (
           <ImageCard
             image={image}
-            isAdmin={true}
+            isAdmin={isAdmin}
             width={image.width}
             height={image.height}
             key={image.public_id}
