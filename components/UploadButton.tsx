@@ -12,6 +12,7 @@ function UploadButton() {
     <div className="flex items-center gap-2">
       <UploadIcon size={16} />
       <CldUploadButton
+        className="w-full"
         options={uploadButtonOptions}
         uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME}
         onSuccess={() => {

@@ -48,16 +48,14 @@ export default function SearchBar(props: SearchBarProps) {
           {isAdmin && (
             <div>
               <CommandGroup heading="Actions">
-                <CommandItem>
+                <CommandItem className="hover:cursor-pointer">
                   <DialogMagicLink />
                 </CommandItem>
-                <CommandItem>
-                  <DialogShareUpload />
+                <CommandItem className="hover:cursor-pointer">
+                  <DialogShareUpload  />
                 </CommandItem>
-                <CommandItem>
-                  <div>
+                <CommandItem className="hover:cursor-pointer">
                     <UploadButton />
-                  </div>
                 </CommandItem>
               </CommandGroup>
               <CommandSeparator />
