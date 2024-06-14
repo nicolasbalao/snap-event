@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         {modal}
-        <div className="flex items-center justify-center h-full w-full">
+        <div className="flex items-center justify-center w-full">
           {children}
         </div>
         <Toaster />

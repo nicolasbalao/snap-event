@@ -3,6 +3,7 @@ import { unstable_cache, unstable_noStore } from "next/cache";
 import extractUserFromSession from "../actions/extract-cookie-session.action";
 import ImageCard from "../components/ImageCard";
 import SearchBar from "../components/searchBar";
+import Gallery from "../components/Gallery";
 
 export type imageData = {
   public_id: string;
@@ -20,7 +21,6 @@ async function getGallery(expression: string) {
     .expression(expression)
     .with_field("tags")
     .sort_by("created_at", "desc")
-    .max_results(30)
     .execute();
 
   return resources;
@@ -60,22 +60,11 @@ export default async function GalleryPage({
   const resources = await cachedGallery(expression);
 
   return (
-    <main className="p-0">
+    <main className="p-0 w-full">
       <div className="p-2 mb-4">
         <SearchBar tags={tags} selectedTag={query} isAdmin={isAdmin} />
       </div>
-      <div className="flex flex-col  items-center w-full md:grid grid-cols-4 gap-6 md:p-4">
-        {resources &&
-          resources.map((image: imageData) => (
-            <ImageCard
-              image={image}
-              isAdmin={isAdmin}
-              width={image.width}
-              height={image.height}
-              key={image.public_id}
-            />
-          ))}
-      </div>
+      <Gallery searchTag={query} isAdmin={isAdmin} />
     </main>
   );
 }

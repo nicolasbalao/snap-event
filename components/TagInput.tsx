@@ -164,7 +164,7 @@ export default function TagInput(props: TagInputProps) {
 
   return (
     <>
-      <div className="bg-white w-full p-2 mt-3  flex flex-col gap-6 self-start sm:gap-4 lg:rounded-sm lg:mt-0 lg:max-w-sm">
+      <div className="bg-white w-full p-2   flex flex-col gap-6 self-start sm:gap-4 lg:rounded-sm  lg:max-w-sm">
         <div className="flex items-center gap-2">
           <Tags />
           <h2 className="text-base font-normal md:text-xl md:font-semibold">
