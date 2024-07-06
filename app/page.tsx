@@ -60,7 +60,7 @@ export default async function GalleryPage({
   const resources = await cachedGallery(expression);
 
   return (
-    <main className="p-0">
+    <main className="p-0 w-full">
       <div className="p-2 mb-4">
         <SearchBar tags={tags} selectedTag={query} isAdmin={isAdmin} />
       </div>
